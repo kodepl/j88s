@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const allTags = new Set<string>();
+  posts.forEach(post => {
+    post.data.tags?.forEach(tag => { allTags.add(tag.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')); });
+    allTags.add(post.data.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''));
+  });
+  return Array.from(allTags).map(tag => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts.filter(p =>
+        p.data.tags?.some(t => t.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === tag) ||
+        p.data.category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === tag
+      )
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const displayTag = tag.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+---
+
+<BaseLayout title={`${displayTag} — The J88s Journal`} description={`Stories about ${displayTag} from The J88s Journal.`}>
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="section-rule mb-2"><span class="section-title">Section</span></div>
+    <h1 class="headline-xl mb-2">{displayTag}</h1>
+    <p class="font-body text-ink-light mb-8">{sortedPosts.length} stories</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedPosts.map((post) => (
+        <article>
+          <a href={`/blog/${post.slug}/`}>
+            <img src={post.data.heroImage} alt={post.data.title} class="w-full aspect-video object-cover mb-3" />
+          </a>
+          <span class="section-title text-accent">{post.data.category}</span>
+          <h2 class="headline-md mt-1">
+            <a href={`/blog/${post.slug}/`} class="hover:text-accent transition">{post.data.title}</a>
+          </h2>
+          <span class="article-meta mt-2 block">{formatDate(post.data.pubDate)}</span>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

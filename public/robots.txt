@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://j88s.life/sitemap.xml

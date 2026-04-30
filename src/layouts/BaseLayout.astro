@@ -1,0 +1,135 @@
+---
+import '../styles/global.css';
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+const { title, description = "The J88s Journal — Trusted reporting, every day", image = "/default-og.jpg" } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | J88s</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(image, Astro.site)} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="a483284e-a2fc-4ee6-864e-924741a5c0ce"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Breaking News Banner -->
+  <div class="bg-accent text-white">
+    <div class="max-w-7xl mx-auto px-4 py-1.5 flex items-center gap-3 overflow-hidden">
+      <span class="font-body text-xs font-bold uppercase tracking-wider bg-white/20 px-2 py-0.5 shrink-0">Breaking</span>
+      <div class="overflow-hidden whitespace-nowrap">
+        <div class="inline-block animate-marquee font-body text-sm">
+          <span class="mx-6">Global Markets Rally as New Trade Agreements Take Effect</span>
+          <span class="mx-6">•</span>
+          <span class="mx-6">Scientists Announce Major Climate Breakthrough</span>
+          <span class="mx-6">•</span>
+          <span class="mx-6">Technology Summit Reveals Revolutionary AI Tools</span>
+          <span class="mx-6">•</span>
+          <span class="mx-6">Health Researchers Publish Groundbreaking Study</span>
+          <span class="mx-6">•</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Masthead -->
+  <header class="border-b-2 border-ink bg-paper">
+    <div class="max-w-7xl mx-auto px-4 pt-6 pb-4">
+      <!-- Top bar -->
+      <div class="flex items-center justify-between mb-4 dateline">
+        <span>{today}</span>
+        <span class="hidden md:inline">Vol. CXXIV — No. 42</span>
+        <span>London, UK</span>
+      </div>
+
+      <!-- Logo -->
+      <div class="text-center mb-4">
+        <a href="/" class="masthead hover:text-accent transition">THE J88s JOURNAL</a>
+        <div class="font-body text-sm text-ink-light tracking-wide mt-1">Trusted Reporting &middot; Independent Analysis &middot; Global Perspective</div>
+      </div>
+
+      <!-- Nav -->
+      <nav class="border-t border-b border-border-paper py-2">
+        <div class="flex items-center justify-center gap-1 md:gap-6 flex-wrap">
+          <a href="/" class="font-body text-sm font-semibold uppercase tracking-wider px-3 py-1 hover:text-accent transition">Front Page</a>
+          <span class="text-border-paper hidden md:inline">|</span>
+          <a href="/blog/" class="font-body text-sm font-semibold uppercase tracking-wider px-3 py-1 hover:text-accent transition">All Stories</a>
+          <span class="text-border-paper hidden md:inline">|</span>
+          <a href="/tag/technology/" class="font-body text-sm font-semibold uppercase tracking-wider px-3 py-1 hover:text-accent transition">Technology</a>
+          <span class="text-border-paper hidden md:inline">|</span>
+          <a href="/tag/science/" class="font-body text-sm font-semibold uppercase tracking-wider px-3 py-1 hover:text-accent transition">Science</a>
+          <span class="text-border-paper hidden md:inline">|</span>
+          <a href="/tag/business/" class="font-body text-sm font-semibold uppercase tracking-wider px-3 py-1 hover:text-accent transition">Business</a>
+          <span class="text-border-paper hidden md:inline">|</span>
+          <a href="/tag/health/" class="font-body text-sm font-semibold uppercase tracking-wider px-3 py-1 hover:text-accent transition">Health</a>
+          <span class="text-border-paper hidden md:inline">|</span>
+          <a href="/tag/culture/" class="font-body text-sm font-semibold uppercase tracking-wider px-3 py-1 hover:text-accent transition">Culture</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-grow">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-ink text-paper-dark">
+    <div class="max-w-7xl mx-auto px-4 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="font-display text-2xl font-bold mb-3">The J88s Journal</div>
+          <p class="text-paper-dark/70 text-sm leading-relaxed">Independent journalism bringing you the stories that matter from around the globe.</p>
+        </div>
+        <div>
+          <h4 class="font-body text-xs font-bold uppercase tracking-widest mb-4 text-paper-dark/50">Sections</h4>
+          <ul class="space-y-2 text-sm text-paper-dark/70">
+            <li><a href="/tag/technology/" class="hover:text-accent-light transition">Technology</a></li>
+            <li><a href="/tag/science/" class="hover:text-accent-light transition">Science</a></li>
+            <li><a href="/tag/business/" class="hover:text-accent-light transition">Business</a></li>
+            <li><a href="/tag/health/" class="hover:text-accent-light transition">Health</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-body text-xs font-bold uppercase tracking-widest mb-4 text-paper-dark/50">Company</h4>
+          <ul class="space-y-2 text-sm text-paper-dark/70">
+            <li><a href="#" class="hover:text-accent-light transition">About Us</a></li>
+            <li><a href="#" class="hover:text-accent-light transition">Contact</a></li>
+            <li><a href="#" class="hover:text-accent-light transition">Careers</a></li>
+            <li><a href="#" class="hover:text-accent-light transition">Advertise</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-body text-xs font-bold uppercase tracking-widest mb-4 text-paper-dark/50">Follow</h4>
+          <div class="flex gap-3">
+            <a href="#" class="w-9 h-9 border border-paper-dark/30 rounded-full flex items-center justify-center hover:border-accent-light hover:text-accent-light transition">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-paper-dark/20 mt-8 pt-6 text-center">
+        <p class="font-body text-xs text-paper-dark/50">&copy; {new Date().getFullYear()} The J88s Journal. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft && data.category === post.data.category);
+const relatedPosts = allPosts.filter(p => p.slug !== post.slug).slice(0, 3);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} image={post.data.heroImage}>
+  <article>
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <!-- Header -->
+      <span class="section-title text-accent">{post.data.category}</span>
+      <h1 class="headline-xl mt-2 mb-4">{post.data.title}</h1>
+      <div class="byline mb-6">{formatDate(post.data.pubDate)}</div>
+
+      <!-- Image -->
+      <img src={post.data.heroImage} alt={post.data.title} class="w-full aspect-video object-cover mb-8" />
+
+      <!-- Lead -->
+      <p class="font-headline text-xl text-ink-light leading-relaxed mb-8 border-b border-border-paper pb-6">{post.data.description}</p>
+
+      <!-- Content -->
+      <div class="prose prose-lg max-w-none drop-cap">
+        <Content />
+      </div>
+
+      <!-- Tags -->
+      <div class="mt-10 pt-6 border-t border-border-paper">
+        <span class="section-title">Tags</span>
+        <div class="flex flex-wrap gap-2 mt-3">
+          {post.data.tags.map(tag => (
+            <a href={`/tag/${tag.toLowerCase().replace(/\s+/g, '-')}/`} class="tag-paper hover:bg-accent hover:text-white hover:border-accent transition">{tag}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </article>
+
+  {relatedPosts.length > 0 && (
+    <section class="bg-paper-dark border-t border-border-paper py-10">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="section-rule mb-4"><span class="section-title">Related Coverage</span></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {relatedPosts.map(related => (
+            <article>
+              <a href={`/blog/${related.slug}/`}>
+                <img src={related.data.heroImage} alt={related.data.title} class="w-full aspect-video object-cover mb-3" />
+              </a>
+              <span class="section-title text-accent">{related.data.category}</span>
+              <h3 class="headline-md mt-1">
+                <a href={`/blog/${related.slug}/`} class="hover:text-accent transition">{related.data.title}</a>
+              </h3>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

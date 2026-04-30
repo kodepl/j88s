@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-paper text-ink font-body antialiased; }
+}
+
+@layer components {
+  .masthead { @apply font-display text-5xl md:text-7xl font-black tracking-tight text-center text-ink; }
+  .dateline { @apply font-body text-xs uppercase tracking-widest text-ink-light border-b border-border-paper pb-1; }
+  .headline-xl { @apply font-headline text-3xl md:text-4xl lg:text-5xl font-black leading-tight; }
+  .headline-lg { @apply font-headline text-2xl md:text-3xl font-bold leading-tight; }
+  .headline-md { @apply font-headline text-lg md:text-xl font-bold leading-snug; }
+  .drop-cap::first-letter { @apply float-left text-5xl font-headline font-black leading-none mr-2 mt-1 text-accent; }
+  .section-rule { @apply border-t-2 border-ink pt-1 mb-4; }
+  .section-title { @apply font-body text-xs font-bold uppercase tracking-widest; }
+  .article-meta { @apply font-body text-sm text-ink-light; }
+  .byline { @apply font-body text-sm text-ink-light italic; }
+  .tag-paper { @apply inline-block font-body text-xs font-semibold uppercase tracking-wide px-2 py-0.5 bg-paper-dark text-ink-light border border-border-light; }
+}
