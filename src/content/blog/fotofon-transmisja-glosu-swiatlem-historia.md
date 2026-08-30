@@ -1,12 +1,13 @@
 ---
 title: "Fotofon — jak promień słońca pozwolił przesyłać ludzki głos?"
 description: "Poznaj zasady działania fotofonu Alexandra Grahama Bella. Optyczna transmisja dźwięku z 1880 roku."
-pubDate: "2026-08-16"
+pubDate: 2026-08-16
 slug: "fotofon-transmisja-glosu-swiatlem-historia"
 author: "J88s Editorial"
 category: "Technologia"
 tags: ["fotofon", "wynalazki", "historia nauki"]
-coverImage: "https://picsum.photos/seed/fotofon-swiatlo-j88s/1200/675"
+featured: false
+heroImage: "https://picsum.photos/seed/fotofon-swiatlo-j88s/1200/675"
 ---
 
 # Fotofon — jak promień słońca pozwolił przesyłać ludzki głos?

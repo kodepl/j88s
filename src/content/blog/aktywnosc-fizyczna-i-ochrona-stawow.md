@@ -1,12 +1,13 @@
 ---
 title: "Aktywność fizyczna i ochrona stawów — jak trenować bez bólu?"
 description: "Kompleksowy przewodnik: jak bezpiecznie trenować, wzmacniać mięśnie stabilizujące stawy, odżywiać chrząstkę i zapobiegać mikrourazom."
-pubDate: "2026-08-18"
+pubDate: 2026-08-18
 slug: "aktywnosc-fizyczna-i-ochrona-stawow"
 author: "J88s Editorial"
 category: "Zdrowie"
 tags: ["zdrowe stawy", "trening", "regeneracja", "sport", "kolagen"]
-coverImage: "https://picsum.photos/seed/ochrona-stawow-j88s/1200/675"
+featured: false
+heroImage: "https://picsum.photos/seed/ochrona-stawow-j88s/1200/675"
 ---
 
 # Aktywność fizyczna i ochrona stawów — jak trenować bez bólu?
